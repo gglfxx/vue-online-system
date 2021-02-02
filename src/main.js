@@ -4,6 +4,7 @@ import router from './router'
 import Cookies from 'js-cookie'
 import Element from 'element-ui'
 import './styles/element-variables.scss'
+import '@/styles/font.scss';
 
 Vue.config.productionTip = false
 

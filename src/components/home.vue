@@ -1,7 +1,7 @@
 <template>
   <div class="main-body">
     <div class="head">
-      <div class="logo"><img v-if="logo" :src="logo"></div>
+      <div class="icon logo"><img v-if="logo" :src="logo"></div>
       <div class="logo-desc">online movie</div>
       <div class="search">
         <input type="text"  @keyup.enter="submit">
@@ -34,13 +34,12 @@
   height: 3rem;
 }
 .logo-desc {
-  width: 35%;
   float: left;
   color: #ff4a4a;
   font-weight: 600;
   font-size:1.2rem;
   margin-left: 0.5rem;
-  font-family: sans-serif;
+  font-family: sanfranciscotext;
 }
 .search {
   float: right;
@@ -51,9 +50,11 @@
     height: 1.6rem;
     overflow: hidden;
     font-size: 0.5410628rem;
-    background: #ebebeb;
+    background-color: #ebebeb;
+    background:url(../assets/search.png) no-repeat right top;
     border: 1px solid #f5f5f5;
     border-radius: 2rem;
+
 }
 .banner{
     margin: 0 auto;
