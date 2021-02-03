@@ -15,10 +15,10 @@
     </div>
     <div class="main-nav">
       <ul>
-        <li class="icon hot main-nav-img"><span>热门</span></li>
-        <li class="icon notice main-nav-img"><span>预告</span></li>
-        <li class="icon mv-top main-nav-img"><span>榜单</span></li>
-        <li class="icon item main-nav-img"><span>分类</span></li>
+        <li class="icon hot"><a href="#"><img/><span>热门</span></a></li>
+        <li class="icon notice"><a href="#"><img/><span>预告</span></a></li>
+        <li class="icon mv-top"><a href="#"><img/><span>榜单</span></a></li>
+        <li class="icon item"><a href="#"><img/><span>分类</span></a></li>
       </ul>
     </div>
     <div class="main-lastet-broad">
@@ -92,31 +92,19 @@
   margin-left: 5px;
   border: 1px solid #26231f;
 }
-.main-nav {
+.main-nav{
+  width:100%;
   position: relative;
-  display: flex;
-  margin: 2rem auto;
-  width: 95%;
-  align-items: center;
-  height: 5rem;
+  margin:1.5rem auto;
 }
 .main-nav ul{
-  overflow: hidden;
-  list-style: none;
-   padding:0;
 }
 .main-nav ul li{
-   display:inline-block;
+  display: inline-block;
 }
-.main-nav-img {
-  align-items: center;
-  justify-content: center;
-}
-.main-nav span {
-  bottom: -10px;
-  position: absolute;
-  font-size: 0.8rem;
-  font-family: sanfranciscotext;
+.main-nav ul li span{
+  position:absolute;
+  bottom:0;
 }
 .main-lastet-broad,
 .main-lastet-online {
