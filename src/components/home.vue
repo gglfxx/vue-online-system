@@ -89,14 +89,13 @@
 .banner {
   margin: 0 auto;
   width: 95%;
-  border-radius: 2rem;
-  height: 192px;
-  box-shadow: 0.5rem 0.5rem 0.5rem #ebebeb;
+  height: 12rem;
 }
 .banner img{
     width: 100%;
     height: 100%;
     border-radius: 2rem;
+    box-shadow: 0.5rem 0.5rem 0.5rem #ebebeb;
 }
 .movies {
   width: 95%;
