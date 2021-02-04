@@ -7,25 +7,41 @@
         <input type="text" @keyup.enter="submit" />
       </div>
     </div>
-    <div class="banner"></div>
-    <div class="banners">
-      <div class="banner-index"></div>
-      <div class="banner-index"></div>
-      <div class="banner-index"></div>
+    <div class="banner">
+      <img src="../assets/avengers.png" />
+    </div>
+    <div class="movies">
+      <div class="movie-index" v-for="(value,index) in imageList"  v-bind:key="index"></div>
     </div>
     <div class="main-nav">
       <ul>
-        <li class="icon hot"><a href="#"><img/><span>热门</span></a></li>
-        <li class="icon notice"><a href="#"><img/><span>预告</span></a></li>
-        <li class="icon mv-top"><a href="#"><img/><span>榜单</span></a></li>
-        <li class="icon item"><a href="#"><img/><span>分类</span></a></li>
+        <li class="icon hot"><a href="#"><span>热门</span></a></li>
+        <li class="icon notice"><a href="#"><span>预告</span></a></li>
+        <li class="icon mv-top"><a href="#"><span>榜单</span></a></li>
+        <li class="icon item"><a href="#"><span>分类</span></a></li>
       </ul>
     </div>
     <div class="main-lastet-broad">
       <h4>正在热播</h4>
+      <ul>
+        <li><a href="#"><span>热门</span></a></li>
+        <li><a href="#"><span>预告</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+      </ul>
     </div>
     <div class="main-lastet-online">
       <h4>最新上线</h4>
+      <ul>
+        <li><a href="#"><span>热门</span></a></li>
+        <li><a href="#"><span>预告</span></a></li>
+        <li><a href="#"><span>榜单</span></a></li>
+      </ul>
     </div>
     <div class="bottom">
       <router-view></router-view>
@@ -74,12 +90,15 @@
   margin: 0 auto;
   width: 95%;
   border-radius: 2rem;
-  background: url(../assets/bg1.png) no-repeat;
-  height: 12rem;
-  background-size: 120%;
+  height: 192px;
   box-shadow: 0.5rem 0.5rem 0.5rem #ebebeb;
 }
-.banners {
+.banner img{
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+}
+.movies {
   width: 95%;
   display: flex;
   justify-content: center;
@@ -87,30 +106,63 @@
   margin-top: 0.5rem;
   align-items: center;
 }
-.banner-index {
+.movie-index {
   width: 10px;
   margin-left: 5px;
   border: 1px solid #26231f;
 }
 .main-nav{
   width:100%;
-  position: relative;
   margin:1.5rem auto;
 }
 .main-nav ul{
+    position: relative;
+    display: flex;
+    padding: 0;
+    justify-content: space-around;
 }
 .main-nav ul li{
   display: inline-block;
+  height: 4.5rem;
+}
+.main-nav ul li a{
+  color:#2b231f;
 }
 .main-nav ul li span{
   position:absolute;
   bottom:0;
+  font-size: 0.8rem;
+  margin-left: 0.6rem;
+  font-family: sanfranciscotext;
 }
 .main-lastet-broad,
 .main-lastet-online {
-  margin: 2rem auto;
   width: 95%;
+  margin: 1.5rem auto;
   height: 10rem;
+}
+.main-lastet-broad h4,
+.main-lastet-online h4{
+  height: 0.5rem;
+}
+.main-lastet-broad ul{
+  position: relative;
+  white-space: nowrap;
+  overflow-y: auto;
+  display: flex;
+}
+.main-lastet-broad ul li{
+  border-radius: 1rem;
+  display: inline-block;
+  height: 8rem;
+  width: 6rem;
+  border: 1px solid #f5f5f5;
+}
+.main-lastet-broad ul li span{
+  position:absolute;
+  bottom:0;
+  font-size: 0.8rem;
+  font-family: sanfranciscotext;
 }
 </style>
 <script>
@@ -131,6 +183,11 @@ export default {
         { name: "留言", path: "/chat" },
         { name: "我的", path: "/my" },
       ],
+      imageList:[
+        {url:"",name:"1"},
+        {url:"",name:"2"},
+        {url:"",name:"3"},
+      ]
     };
   },
 };
