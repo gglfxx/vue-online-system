@@ -4,7 +4,9 @@
         class="tab-item"
         :to="item.path"
         active-class="isActive">
-            <div class="item-wrap">{{item.name}}</div>
+            <div class="item-wrap">
+                <div :class="item.icon"></div>
+            </div>
         </router-link>
     </div>
 </template>

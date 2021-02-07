@@ -7,17 +7,13 @@
         <input type="text" @keyup.enter="submit" />
       </div>
     </div>
-    <div class="banner">
-      <el-carousel :interval="4000" indicator-position="outside" height="195px" ref="carousel">
-      <el-carousel-item v-for="(item,index) in banners" :key="item.url">
-        <v-touch :swipe-options="{direction: 'horizontal'}" v-on:swipeleft="swiperleft(index)" v-on:swiperight="swiperright(index)" class="wrapper">
-        <div class="menu-container" ref="menuContainer">   
-          <img v-lazy="item.url"/>
-        </div>
-       </v-touch>
-      </el-carousel-item>
-    </el-carousel>
-    </div>
+     <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="(item) in banners" :key="item.url">
+              <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
+            </div>
+          </div>
+     </div>
     <div class="main-nav">
       <ul>
         <li class="icon hot"><a href="#"><span>热门</span></a></li>
@@ -26,34 +22,105 @@
         <li class="icon item"><a href="#"><span>分类</span></a></li>
       </ul>
     </div>
-    <div class="main-lastet-broad">
-      <h4>正在热播</h4>
-      <v-touch :swipe-options="{direction: 'horizontal'}" v-on:swipeleft="left" v-on:swiperight="right" class="wrapper">
-        <ul>
-          <li v-for="(item) in hotImages" :key="item.url">
-            <img v-lazy="item.url"/>
-            <span>{{item.title}}</span>
-          </li>
-        </ul>
-       </v-touch>
-    </div>
-    <div class="main-lastet-online">
-      <h4>最新上线</h4>
-      <v-touch :swipe-options="{direction: 'horizontal'}" v-on:swipeleft="left" v-on:swiperight="right" class="wrapper">
-        <ul>
-          <li v-for="(item) in hotImages" :key="item.url">
-            <img v-lazy="item.url"/>
-            <span>{{item.title}}</span>
-          </li>
-        </ul>
-       </v-touch>
-    </div>
+    <div class="main">
+          <div class="panel">
+            <div class="header">
+              <span class="red-name">正在热播</span><span class="more" @click="$router.push({path:'/movie',query:{hotMovie:1}})">全部{{hotMovieList.length}}部 <span class=" icon-more"></span></span>
+            </div>
+            <div class="body">
+              <div class="item" v-for="(item,index) in hotMovieList.slice(0, 6)" :key="index">
+                <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
+                <div class="title">{{item.name}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="header">
+              <span class="blue-name">最新上线</span><span class="more" @click="$router.push({path:'/movie',query:{hotMovie:0}})">全部{{notShowMovieList.length}}部 <span class=" icon-more"></span></span>
+            </div>
+            <div class="body">
+              <div class="item" v-for="(item,index) in notShowMovieList.slice(0,6)" :key="index">
+                <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
+                <div class="presell">
+                  <div class="name ellipsis">{{item.name}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     <div class="bottom">
       <router-view></router-view>
       <tabBar :tabbarList="tabbarList" />
     </div>
   </div>
 </template>
+<script>
+import logo from "@/assets/logo.png"
+import tabBar from "@/components/tabbar"
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
+export default {
+  name: "bottom",
+  components: {
+    tabBar,
+  },
+  data() {
+    return {
+      title: "vue online system",
+      logo: logo,
+      tabbarList: [
+        { name: "主页", path: "/" ,icon:'icon movie_index'},
+        { name: "影城", path: "/store" ,icon:'icon movie_video'},
+        { name: "留言", path: "/chat" ,icon:'icon movie_chat'},
+        { name: "我的", path: "/my" ,icon:'icon movie_index'},
+      ],
+      banners:[
+        {url:require("../assets/avengers.png"),title:"复仇者联盟",id:'1'},
+        {url:require("../assets/fury.png"),title:"狂怒",id:'2'},
+        {url:require("../assets/doctor_strange.png"),title:"奇异博士",id:'3'}
+      ],
+      //热门电影列表
+      hotMovieList:[
+        {url:require("../assets/avengers.png"),name:"复仇者联盟",id:'1',score:'5.2'},
+        {url:require("../assets/fury.png"),name:"狂怒",id:'2',score:'5.2'},
+        {url:require("../assets/doctor strange.png"),name:"奇异博士",id:'3',score:'5.2'},
+        {url:require("../assets/avengers.png"),name:"复仇者联盟",id:'1',score:'5.2'},
+        {url:require("../assets/fury.png"),name:"狂怒",id:'2',score:'5.2'},
+        {url:require("../assets/doctor strange.png"),name:"奇异博士",id:'3',score:'5.2'}
+      ],
+      //未上映电影列表
+      notShowMovieList:[
+        {url:require("../assets/avengers.png"),name:"复仇者联盟",id:'1',month:'2',day:"1"},
+        {url:require("../assets/fury.png"),name:"狂怒",id:'2',month:'2',day:"1"},
+        {url:require("../assets/doctor strange.png"),name:"奇异博士",id:'3',month:'2',day:"1"}
+      ]
+    };
+  },
+  mounted() {
+          new Swiper ('.swiper-container', {
+            autoplay:true,
+            loop: true,
+            effect: "coverflow",
+            centeredSlides: true,
+            slidesPerView: "auto",    //设置中间的卡片居中显示
+            coverflowEffect: {           // coverflow 效果调整
+              rotate: 30,
+              stretch: 0,
+              depth: 60,
+              modifier: 2,
+              slideShadows: true
+            }
+          });
+          window.addEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    //处理滚动
+    handleScroll(){
+        window.pageYOffset>window.innerWidth*80/360 ? this.headerActive = true : this.headerActive = false
+    }
+  }
+};
+</script>
 <style >
 @import "../styles/icon.scss";
 </style>
@@ -91,15 +158,15 @@
   border: 1px solid #f5f5f5;
   border-radius: 2rem;
 }
-.banner {
+.swiper-container {
   margin: 0 auto;
   width: 95%;
   height: 13rem;
 }
-.banner img{
+.swiper-container img{
     width: 100%;
     height: 100%;
-    border-radius: 2rem;
+    border-radius: 0.6rem;
 }
 .main-nav{
   width:100%;
@@ -125,98 +192,113 @@
   margin-left: 0.6rem;
   font-family: sanfranciscotext;
 }
-.wrapper {
-  touch-action: pan-y !important;
-}
-.main-lastet-broad,
-.main-lastet-online {
-  width: 95%;
-  margin: 1.5rem auto;
-  height: 10rem;
-}
-.main-lastet-broad h4,
-.main-lastet-online h4{
-  height: 0.5rem;
-}
-.main-lastet-broad ul,.main-lastet-online ul{
-  white-space: nowrap;
-  overflow-x: auto;
-  padding: 0;
-  display: flex;
-}
-.main-lastet-broad ul li,.main-lastet-online ul li{
-  position: relative;
-  display: inline-block;
-  height: 8rem;
-  margin-right: 1rem;
-}
-.main-lastet-broad ul li img,.main-lastet-online ul li img{
-    height: 100%;
-    width:5.3rem;
-    border-radius: 0.5rem;
-}
-.main-lastet-broad ul li span,.main-lastet-online ul li span{
-  position:absolute;
-  bottom:0;
-  font-size: 0.8rem;
-  font-family: sanfranciscotext;
-}
 </style>
-<script>
-import logo from "@/assets/logo.png";
-import tabBar from "@/components/tabbar";
-export default {
-  name: "bottom",
-  components: {
-    tabBar,
-  },
-  data() {
-    return {
-      title: "vue online system",
-      logo: logo,
-      tabbarList: [
-        { name: "主页", path: "/" },
-        { name: "影城", path: "/store" },
-        { name: "留言", path: "/chat" },
-        { name: "我的", path: "/my" },
-      ],
-      imageList:[
-        {url:"",name:"1"},
-        {url:"",name:"2"},
-        {url:"",name:"3"},
-      ],
-      banners:[
-        {url:require("../assets/avengers.png"),title:"复仇者联盟"},
-        {url:require("../assets/furys.png"),title:"狂怒1"},
-        {url:require("../assets/wolf.png"),title:"狂怒2"}
-      ],
-      hotImages:[
-        {url:require("../assets/avengers.png"),title:"复仇者联盟"},
-        {url:require("../assets/furys.png"),title:"狂怒1"},
-        {url:require("../assets/wolf.png"),title:"狂怒2"}
-      ]
-    };
-  },
-  methods: {
-    //设置滑动切换轮播图
-    swiperleft: function (index) {
-      //上一页
-      this.$refs.carousel.prev();
-      //设置幻灯片的索引
-      this.$refs.carousel.setActiveItem(index - 1);
-    },
-    swiperright: function (index) {
-      //下一页
-      this.$refs.carousel.next();
-      this.$refs.carousel.setActiveItem(index + 1);
-    },
-    //左右滑动
-    left:function(){
-      console.log("左划")
-    },
-    right:function(){
-
-    }
-  }
-};
-</script>
+<style scoped lang="stylus" ref="stylesheet/stylus">
+    .main
+      width 100%
+      border-top-left-radius .25rem
+      border-top-right-radius .25rem
+      padding-top .25rem
+      padding-bottom .8rem
+      position relative
+      background-color #fff
+      .panel
+        font-size .3125rem
+        padding .1rem .25rem
+        border-bottom .08rem solid #f5f5f5
+        .header
+          display flex
+          justify-content center
+          align-items center
+          padding 0 .125rem .2rem
+          .red-name
+            flex 1
+            color #dd2727
+            font-weight 600
+          .blue-name
+            flex 1
+            color #2d98f3
+            font-weight 600
+          .more
+            flex 1
+            text-align right
+            vertical-align middle
+            font-size .25rem
+        .body
+          display flex
+          flex-wrap wrap
+          .item
+            width 33.33%
+            padding .4rem
+            box-sizing border-box
+            position relative
+            overflow hidden
+            img
+              width 100%
+              vertical-align bottom
+            .describe
+              position absolute
+              left 0
+              bottom 0
+              width 100%
+              display flex
+              align-items center
+              padding 0 .08rem
+              height .4rem;
+              box-sizing border-box
+              background-color rgba(0,0,0,.4)
+            .title
+              height 1.5rem
+              width 100%
+              font-weight 600
+              display flex
+              justify-content center
+              align-items center
+              font-size .25rem
+            .peopleNumber
+              color #ffb400
+              position absolute
+              left 0
+              bottom 0
+              width 100%
+              display flex
+              align-items center
+              padding 0 .08rem
+              height .4rem
+              background-color rgba(0,0,0,.4)
+              font-size .25rem
+              box-sizing border-box
+            .presell
+              height 1rem
+              width 100%
+              font-size .25rem
+              .name
+               font-weight 600
+               font-size .25rem
+               padding .1rem 0
+               width 100%
+              .info
+                width 100%
+                height .6rem
+                font-size .25rem
+                font-weight lighter
+                display flex
+                justify-content center
+                align-items center
+                text-align center
+                .date
+                  flex 1
+                .btn
+                  text-align center
+                  font-size .25rem
+                  flex 1
+                  color #fff
+                  width 100%
+                  box-sizing border-box
+                  padding .12rem 0
+                  background-color #2d98f3
+                  border-radius .2rem
+                  box-shadow .02rem .02rem .08rem #2d98f3
+      .panel + .panel
+        padding-top .25rem
+</style>
