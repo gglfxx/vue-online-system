@@ -1,12 +1,6 @@
 <template>
   <div class="main-body">
-    <div class="head">
-      <div class="logo"><img v-if="logo" :src="logo" /></div>
-      <div class="logo-desc">ONLINE MOVIE</div>
-      <div class="search">
-        <input type="text" @keyup.enter="submit" />
-      </div>
-    </div>
+      <Header></Header>
      <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(item) in banners" :key="item.url">
@@ -19,7 +13,7 @@
         <li class="icon hot"><a href="#"><span>热门</span></a></li>
         <li class="icon notice"><a href="#"><span>预告</span></a></li>
         <li class="icon mv-top"><a href="#"><span>榜单</span></a></li>
-        <li class="icon item"><a href="#"><span>分类</span></a></li>
+        <li class="icon family"><a href="#"><span>分类</span></a></li>
       </ul>
     </div>
     <div class="main">
@@ -30,7 +24,7 @@
             <div class="body">
               <div class="item" v-for="(item,index) in hotMovieList.slice(0, 6)" :key="index">
                 <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
-                <div class="title">{{item.name}}</div>
+                <div class="title">{{item.title}}</div>
               </div>
             </div>
           </div>
@@ -42,7 +36,7 @@
               <div class="item" v-for="(item,index) in notShowMovieList.slice(0,6)" :key="index">
                 <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
                 <div class="presell">
-                  <div class="name ellipsis">{{item.name}}</div>
+                  <div class="name ellipsis">{{item.title}}</div>
                 </div>
               </div>
             </div>
@@ -55,44 +49,42 @@
   </div>
 </template>
 <script>
-import logo from "@/assets/logo.png"
 import tabBar from "@/components/tabbar"
+import Header from "@/components/header"
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 export default {
   name: "bottom",
   components: {
     tabBar,
+    Header
   },
   data() {
     return {
       title: "vue online system",
-      logo: logo,
       tabbarList: [
         { name: "主页", path: "/" ,icon:'icon movie_index'},
         { name: "影城", path: "/store" ,icon:'icon movie_video'},
         { name: "留言", path: "/chat" ,icon:'icon movie_chat'},
-        { name: "我的", path: "/my" ,icon:'icon movie_index'},
+        { name: "我的", path: "/my" ,icon:'icon movie_own'},
       ],
       banners:[
-        {url:require("../assets/avengers.png"),title:"复仇者联盟",id:'1'},
-        {url:require("../assets/fury.png"),title:"狂怒",id:'2'},
-        {url:require("../assets/doctor_strange.png"),title:"奇异博士",id:'3'}
+        {url:require("../assets/avengers.jpg"),title:"复仇者联盟",id:'1'},
+        {url:require("../assets/fury.jpg"),title:"狂怒",id:'2'},
+        {url:require("../assets/doctor.jpg"),title:"奇异博士",id:'3'}
       ],
       //热门电影列表
       hotMovieList:[
-        {url:require("../assets/avengers.png"),name:"复仇者联盟",id:'1',score:'5.2'},
-        {url:require("../assets/fury.png"),name:"狂怒",id:'2',score:'5.2'},
-        {url:require("../assets/doctor strange.png"),name:"奇异博士",id:'3',score:'5.2'},
-        {url:require("../assets/avengers.png"),name:"复仇者联盟",id:'1',score:'5.2'},
-        {url:require("../assets/fury.png"),name:"狂怒",id:'2',score:'5.2'},
-        {url:require("../assets/doctor strange.png"),name:"奇异博士",id:'3',score:'5.2'}
+        {url:require("../assets/t_1.jpg"),title:"你的名字",id:'1',score:'5.2'},
+        {url:require("../assets/t_2.jpg"),title:"长城",id:'2',score:'5.2'},
+        {url:require("../assets/t_3.jpg"),title:"血战钢锯岭",id:'3',score:'5.2'},
+        
       ],
       //未上映电影列表
       notShowMovieList:[
-        {url:require("../assets/avengers.png"),name:"复仇者联盟",id:'1',month:'2',day:"1"},
-        {url:require("../assets/fury.png"),name:"狂怒",id:'2',month:'2',day:"1"},
-        {url:require("../assets/doctor strange.png"),name:"奇异博士",id:'3',month:'2',day:"1"}
+        {url:require("../assets/coming_1.jpg"),title:"唐人街探案3",id:'1',month:'2',day:"1"},
+        {url:require("../assets/coming_2.jpg"),title:"侍神令",id:'2',month:'2',day:"1"},
+        {url:require("../assets/coming_3.jpg"),title:"刺杀小说家",id:'3',month:'2',day:"1"}
       ]
     };
   },
@@ -121,51 +113,18 @@ export default {
   }
 };
 </script>
-<style >
-@import "../styles/icon.scss";
-</style>
 <style scoped>
 .main-body {
   margin: 0 auto;
 }
-.head {
-  margin: 1.5rem auto;
-  width: 95%;
-  height: 2rem;
-}
-.logo {
-  float: left;
-  margin-top: 3px;
-}
-.logo-desc {
-  color: #ff4a4a;
-  font-weight: 600;
-  margin-left: 0.4rem;
-  vertical-align: middle;
-  display: inline-block;
-  font-family: sanfranciscotext;
-}
-.search {
-  float: right;
-  width: 50%;
-}
-.search input {
-  width: 97%;
-  height: 1.6rem;
-  overflow: hidden;
-  background: url(../assets/search.png) no-repeat right center #ebebeb;
-  background-size: 1.4rem;
-  border: 1px solid #f5f5f5;
-  border-radius: 2rem;
-}
 .swiper-container {
   margin: 0 auto;
   width: 95%;
-  height: 13rem;
+  overflow: hidden;
 }
 .swiper-container img{
     width: 100%;
-    height: 100%;
+    height: auto;
     border-radius: 0.6rem;
 }
 .main-nav{
@@ -202,6 +161,7 @@ export default {
       padding-bottom .8rem
       position relative
       background-color #fff
+      margin-bottom 35px
       .panel
         font-size .3125rem
         padding .1rem .25rem
@@ -235,6 +195,8 @@ export default {
             overflow hidden
             img
               width 100%
+              height 150px
+              border-radius  0.3rem
               vertical-align bottom
             .describe
               position absolute

@@ -34,6 +34,7 @@ export default {
         align-items: center;
         position:fixed;
         background: #ffffff;
+        box-sizing: border-box;
         bottom: 0px;
         left: 0px;
     }
