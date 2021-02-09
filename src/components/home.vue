@@ -1,7 +1,7 @@
 <template>
   <div class="main-body">
       <Header></Header>
-     <div class="swiper-container">
+     <div class="swiper-container banner">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(item) in banners" :key="item.url">
               <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
@@ -22,10 +22,11 @@
               <span class="red-name">正在热播</span><span class="more" @click="$router.push({path:'/movie',query:{hotMovie:1}})">全部{{hotMovieList.length}}部 <span class=" icon-more"></span></span>
             </div>
             <div class="body">
-              <div class="item" v-for="(item,index) in hotMovieList.slice(0, 6)" :key="index">
+              <!-- <div class="item" v-for="(item,index) in hotMovieList.slice(0, 6)" :key="index">
                 <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
                 <div class="title">{{item.title}}</div>
-              </div>
+              </div> -->
+              <swiper :imgs="hotMovieList"></swiper>
             </div>
           </div>
           <div class="panel">
@@ -35,9 +36,7 @@
             <div class="body">
               <div class="item" v-for="(item,index) in notShowMovieList.slice(0,6)" :key="index">
                 <img :src="item.url" alt="" @click="$router.push({path:'/movie_detail',query:{id:item.id}})">
-                <div class="presell">
-                  <div class="name ellipsis">{{item.title}}</div>
-                </div>
+                <div class="title">{{item.title}}</div>
               </div>
             </div>
           </div>
@@ -51,13 +50,15 @@
 <script>
 import tabBar from "@/components/tabbar"
 import Header from "@/components/header"
+import swiper from "@/components/swiper"
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 export default {
   name: "bottom",
   components: {
     tabBar,
-    Header
+    Header,
+    swiper
   },
   data() {
     return {
@@ -69,27 +70,27 @@ export default {
         { name: "我的", path: "/my" ,icon:'icon movie_own'},
       ],
       banners:[
-        {url:require("../assets/avengers.jpg"),title:"复仇者联盟",id:'1'},
-        {url:require("../assets/fury.jpg"),title:"狂怒",id:'2'},
-        {url:require("../assets/doctor.jpg"),title:"奇异博士",id:'3'}
+        {url:require("../assets/images/avengers.jpg"),title:"复仇者联盟",id:'1'},
+        {url:require("../assets/images/fury.jpg"),title:"狂怒",id:'2'},
+        {url:require("../assets/images/doctor.jpg"),title:"奇异博士",id:'3'}
       ],
       //热门电影列表
       hotMovieList:[
-        {url:require("../assets/t_1.jpg"),title:"你的名字",id:'1',score:'5.2'},
-        {url:require("../assets/t_2.jpg"),title:"长城",id:'2',score:'5.2'},
-        {url:require("../assets/t_3.jpg"),title:"血战钢锯岭",id:'3',score:'5.2'},
+        {url:require("../assets/images/t_1.jpg"),title:"你的名字",id:'1',score:'5.2'},
+        {url:require("../assets/images/t_2.jpg"),title:"长城",id:'2',score:'5.2'},
+        {url:require("../assets/images/t_3.jpg"),title:"血战钢锯岭",id:'3',score:'5.2'},
         
       ],
       //未上映电影列表
       notShowMovieList:[
-        {url:require("../assets/coming_1.jpg"),title:"唐人街探案3",id:'1',month:'2',day:"1"},
-        {url:require("../assets/coming_2.jpg"),title:"侍神令",id:'2',month:'2',day:"1"},
-        {url:require("../assets/coming_3.jpg"),title:"刺杀小说家",id:'3',month:'2',day:"1"}
+        {url:require("../assets/images/coming_1.jpg"),title:"唐人街探案3",id:'1',month:'2',day:"1"},
+        {url:require("../assets/images/coming_2.jpg"),title:"侍神令",id:'2',month:'2',day:"1"},
+        {url:require("../assets/images/coming_3.jpg"),title:"刺杀小说家",id:'3',month:'2',day:"1"}
       ]
     };
   },
   mounted() {
-          new Swiper ('.swiper-container', {
+          new Swiper ('.banner', {
             autoplay:true,
             loop: true,
             effect: "coverflow",
@@ -117,12 +118,12 @@ export default {
 .main-body {
   margin: 0 auto;
 }
-.swiper-container {
+.banner {
   margin: 0 auto;
   width: 95%;
   overflow: hidden;
 }
-.swiper-container img{
+.banner img{
     width: 100%;
     height: auto;
     border-radius: 0.6rem;
@@ -195,7 +196,7 @@ export default {
             overflow hidden
             img
               width 100%
-              height 150px
+              height 90%
               border-radius  0.3rem
               vertical-align bottom
             .describe

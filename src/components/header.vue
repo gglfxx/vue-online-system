@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-import logo from "@/assets/logo.png"
+import logo from "@/assets/images/logo.png"
 export default {
    data() {
     return {
@@ -46,7 +46,7 @@ export default {
   width: 97%;
   height: 1.6rem;
   overflow: hidden;
-  background: url(../assets/search.png) no-repeat right center #ebebeb;
+  background: url(../assets/images/search.png) no-repeat right center #ebebeb;
   background-size: 1.4rem;
   border: 1px solid #f5f5f5;
   border-radius: 2rem;
